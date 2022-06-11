@@ -11,12 +11,12 @@ const MainNavigation = () => {
 
   const tabs = [
     {
-      component: <LendScreen />,
+      component: <Text style={{ fontSize: 100 }}>HI!!</Text>,
       title: "Items",
       icon: { name: "category", color: "white" },
     },
     {
-      component: <Text style={{ fontSize: 100 }}>HI!!</Text>,
+      component: <LendScreen />,
       title: "Lend",
       icon: { name: "shopping-basket", color: "white" },
     },

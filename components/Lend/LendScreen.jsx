@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { Text } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LendInstructions from "./LendInstructions";
+import LendScan from "./LendScan";
 
 const LendScreen = () => {
   // store lend method selected by user
@@ -10,13 +11,12 @@ const LendScreen = () => {
 
   // Read storage, check if user already saw instructions
   useEffect(() => {
-    const readLendMode = async () => {
+    (async () => {
       setLendMode(await AsyncStorage.getItem("@lend_mode"));
-    };
-    readLendMode();
+    })();
   }, []);
 
-  const instructionsHandler = (isQrMode) => {
+  const switchMode = (isQrMode) => {
     const mode = isQrMode ? "QR" : "manual";
     setLendMode(mode);
     AsyncStorage.setItem("@lend_mode", mode);
@@ -25,11 +25,11 @@ const LendScreen = () => {
   return (
     <View>
       {lendMode === null ? (
-        <LendInstructions onDone={instructionsHandler} />
+        <LendInstructions onDone={switchMode} />
       ) : lendMode === "QR" ? (
-        <Text>QR</Text>
+        <LendScan onSwitchMode={() => switchMode(false)} />
       ) : (
-        <Text>manual</Text>
+        <Button onPress={() => switchMode(true)}>to qr</Button>
       )}
     </View>
   );
