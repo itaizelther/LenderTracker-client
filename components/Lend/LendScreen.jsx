@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
-import { Button } from "@rneui/themed";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import LendInstructions from "./LendInstructions";
 import LendScan from "./LendScan";
+import LendManual from "./LendManual";
 
 const LendScreen = () => {
   // store lend method selected by user
@@ -29,7 +30,7 @@ const LendScreen = () => {
       ) : lendMode === "QR" ? (
         <LendScan onSwitchMode={() => switchMode(false)} />
       ) : (
-        <Button onPress={() => switchMode(true)}>to qr</Button>
+        <LendManual onSwitchMode={() => switchMode(true)} />
       )}
     </View>
   );

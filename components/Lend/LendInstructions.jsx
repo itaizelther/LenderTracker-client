@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Text, Chip, Image, Button } from "@rneui/themed";
-import useStyles from "./lendStyles";
+import useStyles from "./instructionsStyles";
 import handshake from "../../assets/handshake.png";
 
 const LendInstructions = ({ onDone }) => {

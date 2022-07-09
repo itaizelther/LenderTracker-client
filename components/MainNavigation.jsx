@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Platform, View } from "react-native";
+import { View } from "react-native";
 import { Tab, TabView, Text, makeStyles } from "@rneui/themed";
 
 import MyComponent from "./MyComponent";
