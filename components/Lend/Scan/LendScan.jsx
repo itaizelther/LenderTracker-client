@@ -3,7 +3,7 @@ import { View, Dimensions, StyleSheet } from "react-native";
 import { Button } from "@rneui/themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
-import useStyles from "./lendStyles";
+import useStyles from "../Manual/lendStyles";
 
 const LendScan = ({ onSwitchMode }) => {
   const [hasPermission, setHasPermission] = useState(null);

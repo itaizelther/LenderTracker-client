@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import LendInstructions from "./LendInstructions";
-import LendScan from "./LendScan";
-import LendManual from "./LendManual";
+import LendInstructions from "./Instructions/LendInstructions";
+import LendScan from "./Scan/LendScan";
+import LendManual from "./Manual/LendManual";
 
 const LendScreen = () => {
   // store lend method selected by user
