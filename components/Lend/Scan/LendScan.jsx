@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Dimensions, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button } from "@rneui/themed";
 import { BarCodeScanner } from "expo-barcode-scanner";
 
-import useStyles from "../Manual/lendStyles";
+import useStyles from "./scanStyles";
 
 const LendScan = ({ onSwitchMode }) => {
-  const [hasPermission, setHasPermission] = useState(null);
+  const [_, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const styles = useStyles();
 
@@ -22,13 +22,8 @@ const LendScan = ({ onSwitchMode }) => {
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
-  const wideContainerStyle = {
-    ...styles.container,
-    width: Dimensions.get("window").width,
-  };
-
   return (
-    <View style={wideContainerStyle}>
+    <View style={styles.wideContainerStyle}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}

@@ -8,9 +8,13 @@ const useStyles = makeStyles((theme) => ({
   },
   manualContent: {
     flex: 1,
-    width: "80%",
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 70,
+    width: "80%",
+  },
+  orSeperator: {
+    fontSize: 40,
+    marginBottom: 20,
   },
 }));
 

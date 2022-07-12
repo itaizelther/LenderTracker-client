@@ -1,7 +1,9 @@
 import React from "react";
-import { View, Dimensions } from "react-native";
+import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
+
 import useStyles from "./lendStyles";
+import ManualCodeInput from "./ManualCodeInput";
 
 const LendManual = ({ onSwitchMode }) => {
   const styles = useStyles();
@@ -9,7 +11,9 @@ const LendManual = ({ onSwitchMode }) => {
   return (
     <View style={styles.container}>
       <View style={styles.manualContent}>
-        <Text>Enter item code:</Text>
+        <ManualCodeInput label="Enter an item code:" icon="tag" />
+        <Text style={styles.orSeperator}>- OR -</Text>
+        <ManualCodeInput label="Search up the business:" icon="store" />
       </View>
       <Button onPress={onSwitchMode} style={{ marginBottom: 30 }}>
         Switch to camera
