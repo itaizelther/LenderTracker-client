@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Tab, TabView, Text, makeStyles } from "@rneui/themed";
+import { Tab, TabView, Text } from "@rneui/themed";
 
-import MyComponent from "./MyComponent";
+import MyComponent from "./Business/MyComponent";
 import LendScreen from "./Lend/LendScreen";
+import useStyles from "./navigationStyles";
 
 const MainNavigation = () => {
   const [index, setIndex] = useState(0);
@@ -54,25 +55,5 @@ const MainNavigation = () => {
     </View>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    height: "100%",
-    backgroundColor: theme.colors.background,
-  },
-  screen: {
-    width: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  tabTitle: {
-    fontSize: 12,
-  },
-  indicatorStyle: {
-    backgroundColor: "white",
-    height: 3,
-  },
-}));
 
 export default MainNavigation;
