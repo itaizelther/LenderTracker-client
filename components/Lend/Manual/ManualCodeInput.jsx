@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import { Text, Input } from "@rneui/themed";
+import { Text, Input, Button } from "@rneui/themed";
 
 const ManualCodeInput = ({ label, icon }) => {
   return (
@@ -13,6 +13,7 @@ const ManualCodeInput = ({ label, icon }) => {
         }}
       >
         <Input leftIcon={{ name: icon, color: "gray" }} />
+        <Button icon={{ name: "search", color: "white", size: 15 }} />
       </View>
     </>
   );

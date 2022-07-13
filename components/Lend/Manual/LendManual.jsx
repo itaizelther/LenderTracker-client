@@ -4,6 +4,7 @@ import { Button, Text } from "@rneui/themed";
 
 import useStyles from "./lendStyles";
 import ManualCodeInput from "./ManualCodeInput";
+import LendConfirmDialog from "../Confirm/LendConfirmDialog";
 
 const LendManual = ({ onSwitchMode }) => {
   const styles = useStyles();
@@ -18,6 +19,11 @@ const LendManual = ({ onSwitchMode }) => {
       <Button onPress={onSwitchMode} style={{ marginBottom: 30 }}>
         Switch to camera
       </Button>
+      <LendConfirmDialog
+        isVisible={true}
+        item="poopoooo"
+        business="peeepeeee"
+      />
     </View>
   );
 };

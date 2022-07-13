@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
     alignItems: "center",
     marginTop: 70,
-    width: "80%",
+    width: "75%",
   },
   orSeperator: {
     fontSize: 40,
