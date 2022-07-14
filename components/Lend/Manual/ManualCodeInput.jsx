@@ -1,8 +1,11 @@
 import React from "react";
 import { View } from "react-native";
 import { Text, Input, Button } from "@rneui/themed";
+import { useState } from "react";
 
-const ManualCodeInput = ({ label, icon }) => {
+const ManualCodeInput = ({ label, icon, onSubmit }) => {
+  const [search, setSearch] = useState("");
+
   return (
     <>
       <Text style={{ fontSize: 20 }}>{label}</Text>
@@ -12,8 +15,15 @@ const ManualCodeInput = ({ label, icon }) => {
           alignItems: "center",
         }}
       >
-        <Input leftIcon={{ name: icon, color: "gray" }} />
-        <Button icon={{ name: "search", color: "white", size: 15 }} />
+        <Input
+          leftIcon={{ name: icon, color: "gray" }}
+          onChangeText={setSearch}
+          onSubmitEditing={() => onSubmit(search)}
+        />
+        <Button
+          icon={{ name: "search", color: "white", size: 15 }}
+          onPress={() => onSubmit(search)}
+        />
       </View>
     </>
   );

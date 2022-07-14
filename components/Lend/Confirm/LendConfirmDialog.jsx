@@ -3,7 +3,13 @@ import { Dialog, Text } from "@rneui/themed";
 
 import useStyles from "./confirmStyles";
 
-const LendConfirmDialog = ({ isVisible, item, business }) => {
+const LendConfirmDialog = ({
+  isVisible,
+  item,
+  business,
+  onCancel,
+  onConfirm,
+}) => {
   const styles = useStyles();
 
   return (
@@ -19,7 +25,7 @@ const LendConfirmDialog = ({ isVisible, item, business }) => {
       <Text style={styles.content}>Please confirm your action.</Text>
       <Dialog.Actions>
         <Dialog.Button title="Confirm" type="solid" />
-        <Dialog.Button title="Cancel" />
+        <Dialog.Button title="Cancel" onPress={onCancel} />
       </Dialog.Actions>
     </Dialog>
   );
