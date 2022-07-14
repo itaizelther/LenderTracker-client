@@ -5,9 +5,8 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 
 import useStyles from "./scanStyles";
 
-const LendScan = ({ onSwitchMode }) => {
+const LendScan = ({ onSwitchMode, onSelectItem, enable }) => {
   const [_, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
   const styles = useStyles();
 
   useEffect(() => {
@@ -18,14 +17,13 @@ const LendScan = ({ onSwitchMode }) => {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    onSelectItem(type, data);
   };
 
   return (
     <View style={styles.wideContainerStyle}>
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={enable ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
       <Button

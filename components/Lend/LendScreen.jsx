@@ -38,11 +38,15 @@ const LendScreen = () => {
       {lendMode === null ? (
         <LendInstructions onDone={switchMode} />
       ) : lendMode === "QR" ? (
-        <LendScan onSwitchMode={() => switchMode(false)} />
+        <LendScan
+          onSwitchMode={() => switchMode(false)}
+          onSelectItem={onSelectItem}
+        />
       ) : (
         <LendManual
           onSwitchMode={() => switchMode(true)}
           onSelectItem={onSelectItem}
+          enable={!showConfirm}
         />
       )}
       <LendConfirmDialog
