@@ -4,6 +4,7 @@ import { Button, Text } from "@rneui/themed";
 
 import useStyles from "./lendStyles";
 import ManualCodeInput from "./ManualCodeInput";
+import LendBusinessList from "./LendBusinessList";
 
 const LendManual = ({ onSwitchMode, onSelectItem }) => {
   const styles = useStyles();
@@ -22,6 +23,7 @@ const LendManual = ({ onSwitchMode, onSelectItem }) => {
           icon="store"
           onSubmit={(business) => onSelectItem(business, null)}
         />
+        <LendBusinessList />
       </View>
       <Button onPress={onSwitchMode} style={{ marginBottom: 30 }}>
         Switch to camera
