@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
 
@@ -7,6 +8,7 @@ import ManualCodeInput from "./ManualCodeInput";
 import LendBusinessList from "./LendBusinessList";
 
 const LendManual = ({ onSwitchMode, onSelectItem }) => {
+  const [business, setBusiness] = useState("");
   const styles = useStyles();
 
   return (
@@ -15,15 +17,19 @@ const LendManual = ({ onSwitchMode, onSelectItem }) => {
         <ManualCodeInput
           label="Enter an item code:"
           icon="tag"
-          onSubmit={(item) => onSelectItem(null, item)}
+          onSubmit={(item) => onSelectItem(item, null)}
         />
         <Text style={styles.orSeperator}>- OR -</Text>
         <ManualCodeInput
           label="Search up the business:"
           icon="store"
-          onSubmit={(business) => onSelectItem(business, null)}
+          onSubmit={setBusiness}
         />
-        <LendBusinessList />
+        {business !== "" && (
+          <LendBusinessList
+            onSelectItem={(item) => onSelectItem(item.name, business)}
+          />
+        )}
       </View>
       <Button onPress={onSwitchMode} style={{ marginBottom: 30 }}>
         Switch to camera

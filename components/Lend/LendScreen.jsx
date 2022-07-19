@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { showMessage } from "react-native-flash-message";
 
 import LendInstructions from "./Instructions/LendInstructions";
 import LendScan from "./Scan/LendScan";
@@ -27,10 +28,19 @@ const LendScreen = () => {
     AsyncStorage.setItem("@lend_mode", mode);
   };
 
-  const onSelectItem = (business, item) => {
+  const onSelectItem = (item, business) => {
     setShowConfirm(true);
     setSelectedBusiness(business);
     setSelectedItem(item);
+  };
+
+  const onConfirmItem = () => {
+    setShowConfirm(false);
+    showMessage({
+      message: "It's done!",
+      description: `successfully lended ${selectedItem}.`,
+      type: "success",
+    });
   };
 
   return (
@@ -41,12 +51,12 @@ const LendScreen = () => {
         <LendScan
           onSwitchMode={() => switchMode(false)}
           onSelectItem={onSelectItem}
+          enable={!showConfirm}
         />
       ) : (
         <LendManual
           onSwitchMode={() => switchMode(true)}
           onSelectItem={onSelectItem}
-          enable={!showConfirm}
         />
       )}
       <LendConfirmDialog
@@ -54,6 +64,7 @@ const LendScreen = () => {
         item={selectedItem}
         business={selectedBusiness}
         onCancel={() => setShowConfirm(false)}
+        onConfirm={onConfirmItem}
       />
     </View>
   );

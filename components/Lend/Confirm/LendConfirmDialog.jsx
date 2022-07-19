@@ -24,7 +24,7 @@ const LendConfirmDialog = ({
       </Text>
       <Text style={styles.content}>Please confirm your action.</Text>
       <Dialog.Actions>
-        <Dialog.Button title="Confirm" type="solid" />
+        <Dialog.Button title="Confirm" type="solid" onPress={onConfirm} />
         <Dialog.Button title="Cancel" onPress={onCancel} />
       </Dialog.Actions>
     </Dialog>
