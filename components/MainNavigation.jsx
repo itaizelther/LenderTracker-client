@@ -4,6 +4,7 @@ import { Tab, TabView, Text } from "@rneui/themed";
 
 import MyComponent from "./Business/MyComponent";
 import LendScreen from "./Lend/LendScreen";
+import ItemsScreen from "./Items/ItemsScreen";
 import useStyles from "./navigationStyles";
 
 const MainNavigation = () => {
@@ -12,7 +13,7 @@ const MainNavigation = () => {
 
   const tabs = [
     {
-      component: <Text style={{ fontSize: 100 }}>HI!!</Text>,
+      component: <ItemsScreen />,
       title: "Items",
       icon: { name: "category", color: "white" },
     },
