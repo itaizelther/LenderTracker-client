@@ -6,6 +6,7 @@ import { showMessage } from "react-native-flash-message";
 
 import LendedItemsList from "./LendedItemsList";
 import LendConfirmDialog from "../Confirm/LendConfirmDialog";
+import boldDialogHelper from "../Confirm/boldDialogHelper";
 
 const ItemsScreen = () => {
   const styles = useStyles();
@@ -63,12 +64,14 @@ const ItemsScreen = () => {
           onItemRemove={onAboutToRemoveItem}
         />
       )}
+
       <LendConfirmDialog
         isVisible={showConfirm}
         onCancel={() => setShowConfirm(false)}
         onConfirm={onConfirmRemoveItem}
         item={removeItem.name}
         business={removeItem.business}
+        template={boldDialogHelper`You're about to remove ${removeItem.name} from your items.`}
       />
     </View>
   );
