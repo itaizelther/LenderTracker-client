@@ -6,7 +6,7 @@ import { showMessage } from "react-native-flash-message";
 import LendInstructions from "./Instructions/LendInstructions";
 import LendScan from "./Scan/LendScan";
 import LendManual from "./Manual/LendManual";
-import LendConfirmDialog from "./Confirm/LendConfirmDialog";
+import LendConfirmDialog from "../Confirm/LendConfirmDialog";
 
 const LendScreen = () => {
   // store lend method selected by user
