@@ -7,7 +7,7 @@ import LendInstructions from "./Instructions/LendInstructions";
 import LendScan from "./Scan/LendScan";
 import LendManual from "./Manual/LendManual";
 import LendConfirmDialog from "../Confirm/LendConfirmDialog";
-import boldDialogHelper from "../Confirm/boldDialogHelper";
+import boldMessageHelper from "../Confirm/boldMessageHelper";
 
 const LendScreen = () => {
   // store lend method selected by user
@@ -64,7 +64,7 @@ const LendScreen = () => {
         isVisible={showConfirm}
         onCancel={() => setShowConfirm(false)}
         onConfirm={onConfirmItem}
-        template={boldDialogHelper`You're about to lend ${selectedItem} from ${selectedBusiness}.`}
+        messageNode={boldMessageHelper`You're about to lend ${selectedItem} from ${selectedBusiness}.`}
       />
     </View>
   );
