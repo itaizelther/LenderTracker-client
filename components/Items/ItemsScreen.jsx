@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import { Text, Input } from "@rneui/themed";
+import { Text } from "@rneui/themed";
 import useStyles from "./itemsStyles";
 import { showMessage } from "react-native-flash-message";
 
-import LendedItemsList from "./LendedItemsList";
+import FilterableList from "../Common/FilterableList";
 import LendConfirmDialog from "../Confirm/LendConfirmDialog";
 import boldMessageHelper from "../Confirm/boldMessageHelper";
+import LendedItemNode from "./LendedItemNode";
 
 const ItemsScreen = () => {
   const styles = useStyles();
-  const [filter, changeFilter] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
   const [removeItem, setRemoveItem] = useState({});
 
@@ -46,24 +46,15 @@ const ItemsScreen = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>My Items</Text>
-      <Input
-        leftIcon={{ name: "filter-alt", color: "gray" }}
-        placeholder="Enter words to filter by..."
-        inputStyle={{ textAlign: "left" }}
-        onChangeText={changeFilter}
-      />
-      {list.length === 0 ? (
-        <Text>You do not lend any items at the moment.</Text>
-      ) : (
-        <LendedItemsList
-          items={list.filter((item) =>
-            Object.values(item).some((property) =>
-              String(property).toLowerCase().includes(filter.toLowerCase())
-            )
-          )}
-          onItemRemove={onAboutToRemoveItem}
-        />
-      )}
+      <FilterableList
+        items={list}
+        emptyMessage="You do not lend any items"
+        containerStyle={{ width: "100%" }}
+      >
+        {(item) => (
+          <LendedItemNode item={item} onItemRemove={onAboutToRemoveItem} />
+        )}
+      </FilterableList>
 
       <LendConfirmDialog
         isVisible={showConfirm}

@@ -1,7 +1,7 @@
 import React from "react";
 import { ListItem, Icon, Button } from "@rneui/themed";
 
-const BusinessItemNode = ({ item, onItemRemove }) => {
+const LendedItemNode = ({ item, onItemRemove }) => {
   return (
     <ListItem bottomDivider>
       <Icon name="local-offer" />
@@ -19,4 +19,4 @@ const BusinessItemNode = ({ item, onItemRemove }) => {
   );
 };
 
-export default BusinessItemNode;
+export default LendedItemNode;

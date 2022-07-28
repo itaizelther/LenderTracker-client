@@ -32,8 +32,9 @@ const ItemsScreen = () => {
       <FilterableList
         items={list}
         emptyMessage="Your business contains no items"
+        containerStyle={{ width: "100%" }}
       >
-        {({ item, index }) => <BusinessItemNode item={item} />}
+        {(item) => <BusinessItemNode item={item} />}
       </FilterableList>
     </View>
   );

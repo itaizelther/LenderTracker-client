@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Input, Text } from "@rneui/themed";
 
-const FilterableList = ({ items, emptyMessage, children }) => {
+const FilterableList = ({ items, emptyMessage, children, containerStyle }) => {
   const [filter, setFilter] = useState("");
 
-  const filterByObjProps = (obj, str) => {
+  const filterByObjProps = (obj, str) =>
     Object.values(obj).some((property) =>
       String(property).toLowerCase().includes(str.toLowerCase())
     );
-  };
 
   return (
-    <>
+    <View style={containerStyle}>
       <Input
         leftIcon={{ name: "filter-alt", color: "gray" }}
         placeholder="Enter words to filter by..."
@@ -26,11 +25,11 @@ const FilterableList = ({ items, emptyMessage, children }) => {
           {items
             .filter((item) => filterByObjProps(item, filter))
             .map((item, index) => (
-              <>{children({ item, index })}</>
+              <React.Fragment key={index}>{children(item)}</React.Fragment>
             ))}
         </ScrollView>
       )}
-    </>
+    </View>
   );
 };
 
