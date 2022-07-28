@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import { Tab, TabView, Text } from "@rneui/themed";
 
-import MyComponent from "./Business/MyComponent";
+import BusinessScreen from "./Business/BusinessScreen";
 import LendScreen from "./Lend/LendScreen";
 import ItemsScreen from "./Items/ItemsScreen";
 import useStyles from "./navigationStyles";
@@ -23,7 +23,7 @@ const MainNavigation = () => {
       icon: { name: "shopping-basket", color: "white" },
     },
     {
-      component: <MyComponent />,
+      component: <BusinessScreen />,
       title: "Business",
       icon: { name: "store", color: "white" },
     },
