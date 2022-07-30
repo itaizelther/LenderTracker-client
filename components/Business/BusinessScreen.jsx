@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { View } from "react-native";
-import { Text, Input } from "@rneui/themed";
-import { showMessage } from "react-native-flash-message";
+import { Text } from "@rneui/themed";
 
 import useStyles from "./businessStyles";
 import FilterableList from "../Common/FilterableList";

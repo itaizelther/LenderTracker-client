@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Input, Text } from "@rneui/themed";
 
-const FilterableList = ({ items, emptyMessage, children, containerStyle }) => {
+const FilterableList = ({ children, items, emptyMessage, containerStyle }) => {
   const [filter, setFilter] = useState("");
 
   const filterByObjProps = (obj, str) =>
