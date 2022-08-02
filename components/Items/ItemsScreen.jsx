@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import { Text } from "@rneui/themed";
 import useStyles from "./itemsStyles";
@@ -9,11 +9,13 @@ import FilterableList from "../Common/FilterableList";
 import LendConfirmDialog from "../Confirm/LendConfirmDialog";
 import boldMessageHelper from "../Confirm/boldMessageHelper";
 import LendedItemNode from "./LendedItemNode";
+import UserContext from "../../context/userContext";
 
 const ItemsScreen = () => {
   const styles = useStyles();
   const [showConfirm, setShowConfirm] = useState(false);
   const [removeItem, setRemoveItem] = useState({});
+  const user = useContext(UserContext);
 
   const [{ data: items = [] }] = useAxios("/api/items");
 

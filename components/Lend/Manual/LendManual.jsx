@@ -11,7 +11,7 @@ const LendManual = ({ onSwitchMode, onSelectItem }) => {
   const [business, setBusiness] = useState("");
   const styles = useStyles();
   const [, manualAxios] = useAxios("", { manual: true });
-  const [{ data: selectedBusiness }] = useAxios({
+  const [{ data: selectedBusiness = [] }] = useAxios({
     url: "/api/groups",
     params: { name: business },
   });

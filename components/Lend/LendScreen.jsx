@@ -18,9 +18,7 @@ const LendScreen = () => {
 
   // Read storage, check if user already saw instructions
   useEffect(() => {
-    (async () => {
-      setLendMode(await AsyncStorage.getItem("@lend_mode"));
-    })();
+    AsyncStorage.getItem("@lend_mode").then(setLendMode);
   }, []);
 
   const switchMode = (isQrMode) => {
