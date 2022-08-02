@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Text } from "@rneui/themed";
+import useAxios from "axios-hooks";
 
 import useStyles from "./businessStyles";
 import FilterableList from "../Common/FilterableList";
@@ -9,27 +10,20 @@ import BusinessItemNode from "./BusinessItemNode";
 const ItemsScreen = () => {
   const styles = useStyles();
 
-  const list = [
-    {
-      name: "name1",
-      id: 1,
-      date: "23.2.2022",
-      business: "asidal",
-    },
-    {
-      name: "name2",
-      id: 2,
-      date: "3.2.2022",
-      business: "tommy",
-    },
-  ];
+  // TODO: not hardcoded
+  const businessId = "mnqDZrE4hrW5aiCJ18i4";
+  const [{ data: businessData = "" }] = useAxios(`/api/groups/${businessId}`);
+  const [{ data: items = [] }] = useAxios({
+    url: "/api/items",
+    params: { groupId: businessId },
+  });
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Asidal</Text>
+      <Text style={styles.header}>{businessData.name}</Text>
       <Text style={styles.subheader}>Your Business</Text>
       <FilterableList
-        items={list}
+        items={items}
         emptyMessage="Your business contains no items"
         containerStyle={{ width: "100%" }}
       >

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { Text } from "@rneui/themed";
 import useStyles from "./itemsStyles";
 import { showMessage } from "react-native-flash-message";
+import useAxios from "axios-hooks";
 
 import FilterableList from "../Common/FilterableList";
 import LendConfirmDialog from "../Confirm/LendConfirmDialog";
@@ -14,20 +15,7 @@ const ItemsScreen = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [removeItem, setRemoveItem] = useState({});
 
-  const list = [
-    {
-      name: "name1",
-      id: 1,
-      date: "23.2.2022",
-      business: "asidal",
-    },
-    {
-      name: "name2",
-      id: 2,
-      date: "3.2.2022",
-      business: "tommy",
-    },
-  ];
+  const [{ data: items = [] }] = useAxios("/api/items");
 
   const onAboutToRemoveItem = (item) => {
     setRemoveItem(item);
@@ -47,7 +35,7 @@ const ItemsScreen = () => {
     <View style={styles.container}>
       <Text style={styles.header}>My Items</Text>
       <FilterableList
-        items={list}
+        items={items}
         emptyMessage="You do not lend any items"
         containerStyle={{ width: "100%" }}
       >
@@ -55,7 +43,6 @@ const ItemsScreen = () => {
           <LendedItemNode item={item} onItemRemove={onAboutToRemoveItem} />
         )}
       </FilterableList>
-
       <LendConfirmDialog
         isVisible={showConfirm}
         onCancel={() => setShowConfirm(false)}

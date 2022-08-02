@@ -1,55 +1,22 @@
 import React from "react";
 import { ScrollView } from "react-native";
 import { ListItem, Icon } from "@rneui/themed";
+import useAxios from "axios-hooks";
 
-const LendBusinessList = ({ onSelectItem }) => {
-  const list = [
-    {
-      title: "Appointments",
-      icon: "av-timer",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-    {
-      title: "Trips",
-      icon: "flight-takeoff",
-    },
-  ];
+const LendBusinessList = ({ businessId, onSelectItem }) => {
+  const [{ data: itemList = [] }] = useAxios({
+    url: "/api/items",
+    params: { groupId: businessId },
+  });
 
   return (
     <ScrollView style={{ width: "100%" }}>
-      {list.map((item, i) => (
+      {itemList.map((item, i) => (
         <ListItem key={i} bottomDivider onPress={() => onSelectItem(item)}>
           <Icon name="local-offer" />
           <ListItem.Content>
-            <ListItem.Title>{item.title}</ListItem.Title>
-            <ListItem.Subtitle>ID: {i + 1}</ListItem.Subtitle>
+            <ListItem.Title>{item.name}</ListItem.Title>
+            <ListItem.Subtitle>ID: {item.id}</ListItem.Subtitle>
           </ListItem.Content>
           <ListItem.Chevron />
         </ListItem>
