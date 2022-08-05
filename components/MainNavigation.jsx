@@ -34,7 +34,7 @@ const MainNavigation = () => {
 
   return (
     <View style={styles.container}>
-      {user === null ? (
+      {user == null ? (
         <SigninScreen />
       ) : (
         <>
