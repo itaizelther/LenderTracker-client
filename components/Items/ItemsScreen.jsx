@@ -17,7 +17,15 @@ const ItemsScreen = () => {
   const [removeItem, setRemoveItem] = useState({});
   const [user, setUserId] = useContext(UserContext);
 
-  const [{ data: items = [] }] = useAxios("/api/items");
+  const [{ data: items = [] }, reloadItems] = useAxios({
+    url: "/api/items",
+    params: { ownerId: user.id },
+  });
+
+  const [, updateItem] = useAxios(
+    { url: `/api/items/${removeItem.id}`, method: "PUT" },
+    { manual: true }
+  );
 
   const onAboutToRemoveItem = (item) => {
     setRemoveItem(item);
@@ -25,7 +33,9 @@ const ItemsScreen = () => {
   };
 
   const onConfirmRemoveItem = () => {
+    updateItem({ data: { ownerId: null } });
     setShowConfirm(false);
+    reloadItems();
     showMessage({
       message: "It's done!",
       description: `successfully removed ${removeItem.name}.`,
