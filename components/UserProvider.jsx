@@ -6,17 +6,29 @@ import UserContext from "../context/userContext";
 
 const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
+  const USER_ID_STORAGE_KEY = "@user_id";
 
   // Read storage on load, look for signed in user
   useEffect(() => {
-    AsyncStorage.getItem("@user_id").then(setUserId);
+    AsyncStorage.getItem(USER_ID_STORAGE_KEY).then(setUserId);
   }, []);
 
-  const [{ data: userObject }] = useAxios(`/api/users/${userId}`);
+  // Save in storage when id changes
+  useEffect(() => {
+    if (userId == null) {
+      AsyncStorage.removeItem(USER_ID_STORAGE_KEY);
+    } else {
+      AsyncStorage.setItem(USER_ID_STORAGE_KEY, userId);
+    }
+  }, [userId]);
+
+  const [{ data: userObject, loading }] = useAxios(`/api/users/${userId}`);
   const contextValue = [userObject !== "" ? userObject : null, setUserId];
 
   return (
-    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
+    <UserContext.Provider value={contextValue}>
+      {!loading && children}
+    </UserContext.Provider>
   );
 };
 
