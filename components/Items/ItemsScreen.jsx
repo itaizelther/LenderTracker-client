@@ -15,7 +15,7 @@ const ItemsScreen = () => {
   const styles = useStyles();
   const [showConfirm, setShowConfirm] = useState(false);
   const [removeItem, setRemoveItem] = useState({});
-  const user = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   const [{ data: items = [] }] = useAxios("/api/items");
 

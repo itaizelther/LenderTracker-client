@@ -13,10 +13,10 @@ const UserProvider = ({ children }) => {
   }, []);
 
   const [{ data: userObject }] = useAxios(`/api/users/${userId}`);
+  const contextValue = [userObject !== "" ? userObject : null, setUserId];
+
   return (
-    <UserContext.Provider value={userObject !== "" ? userObject : null}>
-      {children}
-    </UserContext.Provider>
+    <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>
   );
 };
 

@@ -12,7 +12,7 @@ import useStyles from "./navigationStyles";
 const MainNavigation = () => {
   const [index, setIndex] = useState(0);
   const styles = useStyles();
-  const user = useContext(UserContext);
+  const [user] = useContext(UserContext);
 
   const tabs = [
     {
