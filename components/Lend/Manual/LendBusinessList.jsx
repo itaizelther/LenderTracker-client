@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ScrollView } from "react-native";
 import { ListItem, Icon } from "@rneui/themed";
 import useAxios from "axios-hooks";
 
+import eventBus from "../../../context/eventBus";
+
 const LendBusinessList = ({ businessId, onSelectItem }) => {
-  const [{ data: itemList = [] }] = useAxios({
+  const [{ data: itemList = [] }, reloadItems] = useAxios({
     url: "/api/items",
-    params: { groupId: businessId },
+    params: { businessId: businessId, ownerId: "null" },
   });
+
+  useEffect(() => eventBus.on("lend", reloadItems), []);
 
   return (
     <ScrollView style={{ width: "100%" }}>

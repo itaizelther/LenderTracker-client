@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { showMessage } from "react-native-flash-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import useAxios from "axios-hooks";
 
+import eventBus from "../../context/eventBus";
+import UserContext from "../../context/userContext";
 import LendInstructions from "./Instructions/LendInstructions";
 import LendScan from "./Scan/LendScan";
 import LendManual from "./Manual/LendManual";
@@ -13,31 +16,42 @@ const LendScreen = () => {
   // store lend method selected by user
   const [lendMode, setLendMode] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [selectedBusiness, setSelectedBusiness] = useState(null);
+  const [selectedItem, setSelectedItem] = useState({});
+  const [selectedBusiness, setSelectedBusiness] = useState({});
+  const [user] = useContext(UserContext);
+
+  const LEND_MODE_STORAGE_KEY = "@lend_mode";
 
   // Read storage, check if user already saw instructions
   useEffect(() => {
-    AsyncStorage.getItem("@lend_mode").then(setLendMode);
+    AsyncStorage.getItem(LEND_MODE_STORAGE_KEY).then(setLendMode);
   }, []);
+
+  const [, updateOwner] = useAxios(
+    { url: `/api/items/${selectedItem.id}`, method: "PUT" },
+    { manual: true }
+  );
 
   const switchMode = (isQrMode) => {
     const mode = isQrMode ? "QR" : "manual";
     setLendMode(mode);
-    AsyncStorage.setItem("@lend_mode", mode);
+    AsyncStorage.setItem(LEND_MODE_STORAGE_KEY, mode);
   };
 
   const onSelectItem = (item, business) => {
-    setShowConfirm(true);
-    setSelectedBusiness(business);
     setSelectedItem(item);
+    setSelectedBusiness(business);
+    setShowConfirm(true);
   };
 
   const onConfirmItem = () => {
+    updateOwner({ data: { ownerId: user.id } }).then(() =>
+      eventBus.emit("lend")
+    );
     setShowConfirm(false);
     showMessage({
       message: "It's done!",
-      description: `successfully lended ${selectedItem}.`,
+      description: `successfully lended ${selectedItem.name}.`,
       type: "success",
     });
   };
@@ -62,7 +76,7 @@ const LendScreen = () => {
         isVisible={showConfirm}
         onCancel={() => setShowConfirm(false)}
         onConfirm={onConfirmItem}
-        messageNode={boldMessageHelper`You're about to lend ${selectedItem} from ${selectedBusiness}.`}
+        messageNode={boldMessageHelper`You're about to lend ${selectedItem?.name} from ${selectedBusiness?.name}.`}
       />
     </View>
   );

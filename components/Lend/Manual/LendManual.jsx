@@ -8,21 +8,33 @@ import ManualCodeInput from "./ManualCodeInput";
 import LendBusinessList from "./LendBusinessList";
 
 const LendManual = ({ onSwitchMode, onSelectItem }) => {
-  const [business, setBusiness] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [businessId, setBusinessId] = useState(null);
+  const [selectedItem, setSelectedItem] = useState({});
   const styles = useStyles();
+
   const [, manualAxios] = useAxios("", { manual: true });
-  const [{ data: selectedBusiness = [] }] = useAxios({
+  const [{ data: businessByName = [] }] = useAxios({
     url: "/api/groups",
-    params: { name: business },
+    params: { name: businessName },
   });
+  const [{ data: businessById }] = useAxios(`/api/groups/${businessId}`);
 
   const onSearchItem = async (itemId) => {
     const { data: itemData } = await manualAxios({
       url: `/api/items/${itemId}`,
     });
 
-    onSelectItem(itemData.name);
+    setSelectedItem(itemData);
+    setBusinessId(itemData.businessId);
   };
+
+  // if we looked up for business by id, then item have been selected
+  useEffect(() => {
+    if (businessById) {
+      onSelectItem(selectedItem, businessById);
+    }
+  }, [businessById]);
 
   return (
     <View style={styles.container}>
@@ -36,12 +48,12 @@ const LendManual = ({ onSwitchMode, onSelectItem }) => {
         <ManualCodeInput
           label="Search up the business:"
           icon="store"
-          onSubmit={setBusiness}
+          onSubmit={setBusinessName}
         />
-        {selectedBusiness.length !== 0 && (
+        {businessByName.length !== 0 && (
           <LendBusinessList
-            businessId={selectedBusiness[0].id}
-            onSelectItem={(item) => onSelectItem(item.name, business)}
+            businessId={businessByName[0].id}
+            onSelectItem={(item) => onSelectItem(item, businessByName[0])}
           />
         )}
       </View>

@@ -1,15 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View } from "react-native";
 import { Text, FAB } from "@rneui/themed";
-import useStyles from "./itemsStyles";
 import { showMessage } from "react-native-flash-message";
 import useAxios from "axios-hooks";
+import useStyles from "./itemsStyles";
 
 import FilterableList from "../Common/FilterableList";
 import LendConfirmDialog from "../Confirm/LendConfirmDialog";
 import boldMessageHelper from "../Confirm/boldMessageHelper";
 import LendedItemNode from "./LendedItemNode";
 import UserContext from "../../context/userContext";
+import eventBus from "../../context/eventBus";
 
 const ItemsScreen = () => {
   const styles = useStyles();
@@ -27,15 +28,17 @@ const ItemsScreen = () => {
     { manual: true }
   );
 
+  // When user lends new item in app
+  useEffect(() => eventBus.on("lend", () => reloadItems), []);
+
   const onAboutToRemoveItem = (item) => {
     setRemoveItem(item);
     setShowConfirm(true);
   };
 
   const onConfirmRemoveItem = () => {
-    updateItem({ data: { ownerId: null } });
+    updateItem({ data: { ownerId: null } }).then(() => eventBus.emit("lend"));
     setShowConfirm(false);
-    reloadItems();
     showMessage({
       message: "It's done!",
       description: `successfully removed ${removeItem.name}.`,
