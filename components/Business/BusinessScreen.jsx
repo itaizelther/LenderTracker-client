@@ -1,34 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View } from "react-native";
-import { Text } from "@rneui/themed";
 import useAxios from "axios-hooks";
 
 import useStyles from "./businessStyles";
-import FilterableList from "../Common/FilterableList";
-import BusinessItemNode from "./BusinessItemNode";
+import BusinessManage from "./BusinessManage";
+import BusinessCreate from "./BusinessCreate";
+import UserContext from "../../context/userContext";
 
 const ItemsScreen = () => {
   const styles = useStyles();
+  const [user] = useContext(UserContext);
 
-  // TODO: not hardcoded
-  const businessId = "mnqDZrE4hrW5aiCJ18i4";
-  const [{ data: businessData = "" }] = useAxios(`/api/groups/${businessId}`);
-  const [{ data: items = [] }] = useAxios({
-    url: "/api/items",
-    params: { groupId: businessId },
+  const [{ data: businessSelect = [null] }] = useAxios({
+    url: "/api/groups",
+    params: { ownerId: user.id },
   });
+
+  const [businessData] = businessSelect || [null];
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>{businessData.name}</Text>
-      <Text style={styles.subheader}>Your Business</Text>
-      <FilterableList
-        items={items}
-        emptyMessage="Your business contains no items"
-        containerStyle={{ width: "100%" }}
-      >
-        {(item) => <BusinessItemNode item={item} />}
-      </FilterableList>
+      {businessData ? (
+        <BusinessManage business={businessData} />
+      ) : (
+        <BusinessCreate />
+      )}
     </View>
   );
 };

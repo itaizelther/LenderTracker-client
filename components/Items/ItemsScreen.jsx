@@ -29,7 +29,7 @@ const ItemsScreen = () => {
   );
 
   // When user lends new item in app
-  useEffect(() => eventBus.on("lend", () => reloadItems), []);
+  useEffect(() => eventBus.on("lend", reloadItems), []);
 
   const onAboutToRemoveItem = (item) => {
     setRemoveItem(item);
