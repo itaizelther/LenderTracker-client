@@ -1,16 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View } from "react-native";
 import { Text, Button } from "@rneui/themed";
 import useAxios from "axios-hooks";
 
 import SigninInput from "../Signin/SigninInput";
+import UserContext from "../../context/userContext";
 import useStyles from "./businessStyles";
 
-const BusinessCreate = () => {
+const BusinessCreate = ({ onSelect }) => {
   const styles = useStyles();
   const [businessName, setBusinessName] = useState("");
+  const [, createBusiness] = useAxios(
+    { url: "/api/groups", method: "POST" },
+    { manual: true }
+  );
+  const [user] = useContext(UserContext);
 
-  const onCreateBusiness = () => {};
+  const onCreateBusiness = () => {
+    createBusiness({ data: { name: businessName, ownerId: user.id } }).then(
+      () => onSelect()
+    );
+  };
 
   return (
     <>

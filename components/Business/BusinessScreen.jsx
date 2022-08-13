@@ -11,7 +11,7 @@ const ItemsScreen = () => {
   const styles = useStyles();
   const [user] = useContext(UserContext);
 
-  const [{ data: businessSelect = [null] }] = useAxios({
+  const [{ data: businessSelect = [null] }, refreshBusiness] = useAxios({
     url: "/api/groups",
     params: { ownerId: user.id },
   });
@@ -23,7 +23,7 @@ const ItemsScreen = () => {
       {businessData ? (
         <BusinessManage business={businessData} />
       ) : (
-        <BusinessCreate />
+        <BusinessCreate onSelect={refreshBusiness} />
       )}
     </View>
   );
