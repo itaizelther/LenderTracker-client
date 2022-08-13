@@ -29,7 +29,7 @@ const ItemsScreen = () => {
   );
 
   // When user lends new item in app
-  useEffect(() => eventBus.on("lend", reloadItems), []);
+  useEffect(() => eventBus.on("refresh", reloadItems), []);
 
   const onAboutToRemoveItem = (item) => {
     setRemoveItem(item);
@@ -37,7 +37,9 @@ const ItemsScreen = () => {
   };
 
   const onConfirmRemoveItem = () => {
-    updateItem({ data: { ownerId: null } }).then(() => eventBus.emit("lend"));
+    updateItem({ data: { ownerId: null } }).then(() =>
+      eventBus.emit("refresh")
+    );
     setShowConfirm(false);
     showMessage({
       message: "It's done!",

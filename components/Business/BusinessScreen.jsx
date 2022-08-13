@@ -3,8 +3,8 @@ import { View } from "react-native";
 import useAxios from "axios-hooks";
 
 import useStyles from "./businessStyles";
-import BusinessManage from "./BusinessManage";
-import BusinessCreate from "./BusinessCreate";
+import BusinessManage from "./Manage/BusinessManage";
+import BusinessCreate from "./Create/BusinessCreate";
 import UserContext from "../../context/userContext";
 
 const ItemsScreen = () => {

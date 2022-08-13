@@ -46,7 +46,7 @@ const LendScreen = () => {
 
   const onConfirmItem = () => {
     updateOwner({ data: { ownerId: user.id } }).then(() =>
-      eventBus.emit("lend")
+      eventBus.emit("refresh")
     );
     setShowConfirm(false);
     showMessage({

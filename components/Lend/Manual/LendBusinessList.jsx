@@ -11,7 +11,7 @@ const LendBusinessList = ({ businessId, onSelectItem }) => {
     params: { businessId: businessId, ownerId: "null" },
   });
 
-  useEffect(() => eventBus.on("lend", reloadItems), []);
+  useEffect(() => eventBus.on("refresh", reloadItems), []);
 
   return (
     <ScrollView style={{ width: "100%" }}>

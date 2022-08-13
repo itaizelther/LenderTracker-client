@@ -3,9 +3,9 @@ import { View } from "react-native";
 import { Text, Button } from "@rneui/themed";
 import useAxios from "axios-hooks";
 
-import SigninInput from "../Signin/SigninInput";
-import UserContext from "../../context/userContext";
-import useStyles from "./businessStyles";
+import SigninInput from "../../Signin/SigninInput";
+import UserContext from "../../../context/userContext";
+import useStyles from "../businessStyles";
 
 const BusinessCreate = ({ onSelect }) => {
   const styles = useStyles();

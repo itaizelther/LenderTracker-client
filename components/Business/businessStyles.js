@@ -1,6 +1,6 @@
 import { makeStyles } from "@rneui/themed";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   container: {
     flex: 1,
     alignItems: "center",
@@ -20,6 +20,12 @@ const useStyles = makeStyles(() => ({
   createContainer: {
     width: "100%",
     padding: 10,
+  },
+  addButton: {
+    color: theme.colors.primary,
+  },
+  addItemContainer: {
+    paddingRight: 50,
   },
 }));
 
