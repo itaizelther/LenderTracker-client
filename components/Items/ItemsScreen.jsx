@@ -37,9 +37,9 @@ const ItemsScreen = () => {
   };
 
   const onConfirmRemoveItem = () => {
-    updateItem({ data: { ownerId: null } }).then(() =>
-      eventBus.emit("refresh")
-    );
+    updateItem({
+      data: { ownerId: null, date: new Date().toLocaleDateString() },
+    }).then(() => eventBus.emit("refresh"));
     setShowConfirm(false);
     showMessage({
       message: "It's done!",

@@ -1,15 +1,20 @@
 import React from "react";
-import { ListItem, Icon, Button } from "@rneui/themed";
+import { ListItem, Icon } from "@rneui/themed";
 
 const BusinessItemNode = ({ item }) => {
+  const isAvailable = item.ownerId == null;
+
   return (
     <ListItem bottomDivider>
       <Icon name="local-offer" />
       <ListItem.Content>
-        <ListItem.Title>{item.name}</ListItem.Title>
+        <ListItem.Title style={{ fontWeight: "bold" }}>
+          {item.name}
+        </ListItem.Title>
         <ListItem.Subtitle>
-          Lended by: {item.business} | {item.date}
+          {isAvailable ? "Available" : "Taken"}
         </ListItem.Subtitle>
+        <ListItem.Subtitle>Last changed: {item.date}</ListItem.Subtitle>
       </ListItem.Content>
     </ListItem>
   );

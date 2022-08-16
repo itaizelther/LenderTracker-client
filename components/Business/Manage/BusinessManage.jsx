@@ -25,7 +25,9 @@ const BusinessManage = ({ business }) => {
   useEffect(() => eventBus.on("refresh", refreshItems), []);
 
   const onAddItem = async ({ name }) => {
-    await createItem({ data: { name, ownerId: null, groupId: business.id } });
+    await createItem({
+      data: { name, ownerId: null, ownerName: null, groupId: business.id },
+    });
     setShowAddDialog(false);
     eventBus.emit("refresh");
   };

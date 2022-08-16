@@ -27,7 +27,7 @@ const LendScreen = () => {
     AsyncStorage.getItem(LEND_MODE_STORAGE_KEY).then(setLendMode);
   }, []);
 
-  const [, updateOwner] = useAxios(
+  const [, updateItem] = useAxios(
     { url: `/api/items/${selectedItem.id}`, method: "PUT" },
     { manual: true }
   );
@@ -45,9 +45,9 @@ const LendScreen = () => {
   };
 
   const onConfirmItem = () => {
-    updateOwner({ data: { ownerId: user.id } }).then(() =>
-      eventBus.emit("refresh")
-    );
+    updateItem({
+      data: { ownerId: user.id, date: new Date().toLocaleDateString() },
+    }).then(() => eventBus.emit("refresh"));
     setShowConfirm(false);
     showMessage({
       message: "It's done!",

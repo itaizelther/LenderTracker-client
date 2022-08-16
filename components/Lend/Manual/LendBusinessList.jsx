@@ -8,7 +8,7 @@ import eventBus from "../../../context/eventBus";
 const LendBusinessList = ({ businessId, onSelectItem }) => {
   const [{ data: itemList = [] }, reloadItems] = useAxios({
     url: "/api/items",
-    params: { businessId: businessId, ownerId: "null" },
+    params: { ownerId: "null", groupId: businessId },
   });
 
   useEffect(() => eventBus.on("refresh", reloadItems), []);
@@ -19,7 +19,9 @@ const LendBusinessList = ({ businessId, onSelectItem }) => {
         <ListItem key={i} bottomDivider onPress={() => onSelectItem(item)}>
           <Icon name="local-offer" />
           <ListItem.Content>
-            <ListItem.Title>{item.name}</ListItem.Title>
+            <ListItem.Title style={{ fontWeight: "bold" }}>
+              {item.name}
+            </ListItem.Title>
             <ListItem.Subtitle>ID: {item.id}</ListItem.Subtitle>
           </ListItem.Content>
           <ListItem.Chevron />
