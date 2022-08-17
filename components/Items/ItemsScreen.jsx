@@ -55,7 +55,7 @@ const ItemsScreen = () => {
       <FilterableList
         items={items}
         emptyMessage="You do not lend any items"
-        containerStyle={{ width: "100%" }}
+        containerStyle={{ width: "100%", flex: 1 }}
       >
         {(item) => (
           <LendedItemNode item={item} onItemRemove={onAboutToRemoveItem} />

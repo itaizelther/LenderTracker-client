@@ -46,7 +46,11 @@ const LendScreen = () => {
 
   const onConfirmItem = () => {
     updateItem({
-      data: { ownerId: user.id, date: new Date().toLocaleDateString() },
+      data: {
+        ownerId: user.id,
+        ownerName: user.username,
+        date: new Date().toLocaleDateString(),
+      },
     }).then(() => eventBus.emit("refresh"));
     setShowConfirm(false);
     showMessage({

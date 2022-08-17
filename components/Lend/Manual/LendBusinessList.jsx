@@ -14,7 +14,7 @@ const LendBusinessList = ({ businessId, onSelectItem }) => {
   useEffect(() => eventBus.on("refresh", reloadItems), []);
 
   return (
-    <ScrollView style={{ width: "100%" }}>
+    <ScrollView style={{ width: "100%", flex: 1 }}>
       {itemList.map((item, i) => (
         <ListItem key={i} bottomDivider onPress={() => onSelectItem(item)}>
           <Icon name="local-offer" />

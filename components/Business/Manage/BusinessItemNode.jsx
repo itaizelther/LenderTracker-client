@@ -12,7 +12,7 @@ const BusinessItemNode = ({ item }) => {
           {item.name}
         </ListItem.Title>
         <ListItem.Subtitle>
-          {isAvailable ? "Available" : "Taken"}
+          {isAvailable ? "Available" : `Taken by ${item.ownerName}`}
         </ListItem.Subtitle>
         <ListItem.Subtitle>Last changed: {item.date}</ListItem.Subtitle>
       </ListItem.Content>

@@ -26,7 +26,7 @@ const LendManual = ({ onSwitchMode, onSelectItem }) => {
     });
 
     setSelectedItem(itemData);
-    setBusinessId(itemData.businessId);
+    setBusinessId(itemData.groupId);
   };
 
   // if we looked up for business by id, then item have been selected

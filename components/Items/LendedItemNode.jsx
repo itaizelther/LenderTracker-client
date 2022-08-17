@@ -9,8 +9,8 @@ const LendedItemNode = ({ item, onItemRemove }) => {
         <ListItem.Title style={{ fontWeight: "bold" }}>
           {item.name}
         </ListItem.Title>
-        <ListItem.Subtitle>From: {item.business}</ListItem.Subtitle>
-        <ListItem.Subtitle>Lended on: {item.date}</ListItem.Subtitle>
+        <ListItem.Subtitle>Lended from: {item.groupName}</ListItem.Subtitle>
+        <ListItem.Subtitle>on {item.date}</ListItem.Subtitle>
       </ListItem.Content>
       <Button
         icon={{ name: "remove-circle-outline", color: "white" }}

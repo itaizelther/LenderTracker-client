@@ -25,8 +25,17 @@ const BusinessManage = ({ business }) => {
   useEffect(() => eventBus.on("refresh", refreshItems), []);
 
   const onAddItem = async ({ name }) => {
+    const itemId = `${name.charAt(0)}${Math.floor(Math.random() * 10000)}`;
+
     await createItem({
-      data: { name, ownerId: null, ownerName: null, groupId: business.id },
+      url: `/api/items/${itemId}`,
+      data: {
+        name,
+        ownerId: null,
+        groupId: business.id,
+        groupName: business.name,
+        date: new Date().toLocaleDateString(),
+      },
     });
     setShowAddDialog(false);
     eventBus.emit("refresh");
@@ -39,7 +48,7 @@ const BusinessManage = ({ business }) => {
       <FilterableList
         items={items}
         emptyMessage="Your business contains no items"
-        containerStyle={{ width: "100%" }}
+        containerStyle={{ width: "100%", flex: 1 }}
       >
         {(item) => <BusinessItemNode item={item} />}
       </FilterableList>
