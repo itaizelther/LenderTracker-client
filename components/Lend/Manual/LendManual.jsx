@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
+import { showMessage } from "react-native-flash-message";
 import useAxios from "axios-hooks";
 
 import useStyles from "./lendStyles";
@@ -18,11 +19,18 @@ const LendManual = ({ onSwitchMode, onSelectItem }) => {
   });
 
   const onSearchItem = async (itemId) => {
-    const { data: itemData } = await itemById({
-      url: `/api/items/${itemId}`,
-    });
-
-    onSelectItem(itemData);
+    try {
+      const { data: itemData } = await itemById({
+        url: `/api/items/${itemId}`,
+      });
+      onSelectItem(itemData);
+    } catch (AxiosError) {
+      showMessage({
+        message: "Invalid ID inserted",
+        description: `${itemId} is not a valid item id.`,
+        type: "danger",
+      });
+    }
   };
 
   return (
