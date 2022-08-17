@@ -17,7 +17,6 @@ const LendScreen = () => {
   const [lendMode, setLendMode] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
-  const [selectedBusiness, setSelectedBusiness] = useState({});
   const [user] = useContext(UserContext);
 
   const LEND_MODE_STORAGE_KEY = "@lend_mode";
@@ -38,9 +37,8 @@ const LendScreen = () => {
     AsyncStorage.setItem(LEND_MODE_STORAGE_KEY, mode);
   };
 
-  const onSelectItem = (item, business) => {
+  const onSelectItem = (item) => {
     setSelectedItem(item);
-    setSelectedBusiness(business);
     setShowConfirm(true);
   };
 
@@ -80,7 +78,7 @@ const LendScreen = () => {
         isVisible={showConfirm}
         onCancel={() => setShowConfirm(false)}
         onConfirm={onConfirmItem}
-        messageNode={boldMessageHelper`You're about to lend ${selectedItem?.name} from ${selectedBusiness?.name}.`}
+        messageNode={boldMessageHelper`You're about to lend ${selectedItem?.name} from ${selectedItem?.groupName}.`}
       />
     </View>
   );

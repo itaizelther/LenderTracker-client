@@ -9,32 +9,21 @@ import LendBusinessList from "./LendBusinessList";
 
 const LendManual = ({ onSwitchMode, onSelectItem }) => {
   const [businessName, setBusinessName] = useState("");
-  const [businessId, setBusinessId] = useState(null);
-  const [selectedItem, setSelectedItem] = useState({});
   const styles = useStyles();
 
-  const [, manualAxios] = useAxios("", { manual: true });
+  const [, itemById] = useAxios("/api/items", { manual: true });
   const [{ data: businessByName = [] }] = useAxios({
     url: "/api/groups",
     params: { name: businessName },
   });
-  const [{ data: businessById }] = useAxios(`/api/groups/${businessId}`);
 
   const onSearchItem = async (itemId) => {
-    const { data: itemData } = await manualAxios({
+    const { data: itemData } = await itemById({
       url: `/api/items/${itemId}`,
     });
 
-    setSelectedItem(itemData);
-    setBusinessId(itemData.groupId);
+    onSelectItem(itemData);
   };
-
-  // if we looked up for business by id, then item have been selected
-  useEffect(() => {
-    if (businessById) {
-      onSelectItem(selectedItem, businessById);
-    }
-  }, [businessById]);
 
   return (
     <View style={styles.container}>
