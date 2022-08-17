@@ -7,10 +7,12 @@ import useStyles from "../businessStyles";
 import FilterableList from "../../Common/FilterableList";
 import BusinessItemNode from "./BusinessItemNode";
 import AddBusinessItemDialog from "./AddBusinessItemDialog";
+import ItemGenerateQRDialog from "./ItemGenerateQRDialog";
 
 const BusinessManage = ({ business }) => {
   const styles = useStyles();
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showQRDialog, setShowQRDialog] = useState({ show: false, id: null });
 
   const [{ data: items = [] }, refreshItems] = useAxios({
     url: "/api/items",
@@ -25,7 +27,9 @@ const BusinessManage = ({ business }) => {
   useEffect(() => eventBus.on("refresh", refreshItems), []);
 
   const onAddItem = async ({ name }) => {
-    const itemId = `${name.charAt(0)}${Math.floor(Math.random() * 10000)}`;
+    const itemId = `${name.substring(0, 2).toUpperCase()}${business.name
+      .substring(0, 2)
+      .toUpperCase()}${Math.floor(Math.random() * 10000)}`;
 
     await createItem({
       url: `/api/items/${itemId}`,
@@ -50,7 +54,12 @@ const BusinessManage = ({ business }) => {
         emptyMessage="Your business contains no items"
         containerStyle={{ width: "100%", flex: 1 }}
       >
-        {(item) => <BusinessItemNode item={item} />}
+        {(item) => (
+          <BusinessItemNode
+            item={item}
+            onShowQR={(item) => setShowQRDialog({ show: true, id: item.id })}
+          />
+        )}
       </FilterableList>
       <FAB
         color={styles.addButton.color}
@@ -62,6 +71,11 @@ const BusinessManage = ({ business }) => {
         isVisible={showAddDialog}
         onCancel={() => setShowAddDialog(false)}
         onCreate={onAddItem}
+      />
+      <ItemGenerateQRDialog
+        isVisible={showQRDialog.show}
+        itemId={showQRDialog.id}
+        onCacnel={() => setShowQRDialog({ show: false, id: null })}
       />
     </>
   );

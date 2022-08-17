@@ -1,7 +1,7 @@
 import React from "react";
-import { ListItem, Icon } from "@rneui/themed";
+import { ListItem, Icon, Button } from "@rneui/themed";
 
-const BusinessItemNode = ({ item }) => {
+const BusinessItemNode = ({ item, onShowQR }) => {
   const isAvailable = item.ownerId == null;
 
   return (
@@ -16,6 +16,10 @@ const BusinessItemNode = ({ item }) => {
         </ListItem.Subtitle>
         <ListItem.Subtitle>Last changed: {item.date}</ListItem.Subtitle>
       </ListItem.Content>
+      <Button
+        icon={{ name: "qr-code", color: "white" }}
+        onPress={() => onShowQR(item)}
+      />
     </ListItem>
   );
 };
