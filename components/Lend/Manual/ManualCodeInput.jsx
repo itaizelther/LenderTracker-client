@@ -26,6 +26,7 @@ const ManualCodeInput = ({ label, icon, onSubmit }) => {
         <Button
           icon={{ name: "search", color: "white", size: 15 }}
           onPress={onDoneInput}
+          disabled={!search}
         />
       </View>
     </>
