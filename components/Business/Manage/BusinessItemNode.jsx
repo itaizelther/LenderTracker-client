@@ -2,8 +2,6 @@ import React from "react";
 import { ListItem, Icon, Button } from "@rneui/themed";
 
 const BusinessItemNode = ({ item, onShowQR }) => {
-  const isAvailable = item.ownerId == null;
-
   return (
     <ListItem bottomDivider>
       <Icon name="local-offer" />
@@ -12,7 +10,7 @@ const BusinessItemNode = ({ item, onShowQR }) => {
           {item.name}
         </ListItem.Title>
         <ListItem.Subtitle>
-          {isAvailable ? "Available" : `Taken by ${item.ownerName}`}
+          {item.ownerId == null ? "Available" : `Taken by ${item.ownerName}`}
         </ListItem.Subtitle>
         <ListItem.Subtitle>Last changed: {item.date}</ListItem.Subtitle>
       </ListItem.Content>

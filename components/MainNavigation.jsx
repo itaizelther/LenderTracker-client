@@ -9,28 +9,28 @@ import SigninScreen from "./Signin/SigninScreen";
 import UserContext from "../context/userContext";
 import useStyles from "./navigationStyles";
 
+const tabs = [
+  {
+    component: <ItemsScreen />,
+    title: "Items",
+    icon: { name: "category", color: "white" },
+  },
+  {
+    component: <LendScreen />,
+    title: "Lend",
+    icon: { name: "shopping-basket", color: "white" },
+  },
+  {
+    component: <BusinessScreen />,
+    title: "Business",
+    icon: { name: "store", color: "white" },
+  },
+];
+
 const MainNavigation = () => {
   const [index, setIndex] = useState(0);
   const styles = useStyles();
   const [user] = useContext(UserContext);
-
-  const tabs = [
-    {
-      component: <ItemsScreen />,
-      title: "Items",
-      icon: { name: "category", color: "white" },
-    },
-    {
-      component: <LendScreen />,
-      title: "Lend",
-      icon: { name: "shopping-basket", color: "white" },
-    },
-    {
-      component: <BusinessScreen />,
-      title: "Business",
-      icon: { name: "store", color: "white" },
-    },
-  ];
 
   return (
     <View style={styles.container}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { View, Keyboard } from "react-native";
 import { Text, Input, Button } from "@rneui/themed";
 import { useState } from "react";
@@ -9,10 +9,10 @@ const ManualCodeInput = ({ label, icon, onSubmit }) => {
   const [search, setSearch] = useState("");
   const styles = useStyles();
 
-  const onDoneInput = () => {
+  const onDoneInput = useCallback(() => {
     Keyboard.dismiss();
     onSubmit(search);
-  };
+  }, [onSubmit, search]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import { View } from "react-native";
 import { showMessage } from "react-native-flash-message";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,14 +12,14 @@ import LendManual from "./Manual/LendManual";
 import LendConfirmDialog from "../Confirm/LendConfirmDialog";
 import boldMessageHelper from "../Confirm/boldMessageHelper";
 
+const LEND_MODE_STORAGE_KEY = "@lend_mode";
+
 const LendScreen = () => {
   // store lend method selected by user
   const [lendMode, setLendMode] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
   const [user] = useContext(UserContext);
-
-  const LEND_MODE_STORAGE_KEY = "@lend_mode";
 
   // Read storage, check if user already saw instructions
   useEffect(() => {
@@ -31,18 +31,24 @@ const LendScreen = () => {
     { manual: true }
   );
 
-  const switchMode = (isQrMode) => {
-    const mode = isQrMode ? "QR" : "manual";
-    setLendMode(mode);
-    AsyncStorage.setItem(LEND_MODE_STORAGE_KEY, mode);
-  };
+  const switchMode = useCallback(
+    (isQrMode) => {
+      const mode = isQrMode ? "QR" : "manual";
+      setLendMode(mode);
+      AsyncStorage.setItem(LEND_MODE_STORAGE_KEY, mode);
+    },
+    [setLendMode]
+  );
 
-  const onSelectItem = (item) => {
-    setSelectedItem(item);
-    setShowConfirm(true);
-  };
+  const onSelectItem = useCallback(
+    (item) => {
+      setSelectedItem(item);
+      setShowConfirm(true);
+    },
+    [setSelectedItem, setShowConfirm]
+  );
 
-  const onConfirmItem = () => {
+  const onConfirmItem = useCallback(() => {
     updateItem({
       data: {
         ownerId: user.id,
@@ -56,7 +62,7 @@ const LendScreen = () => {
       description: `successfully lended ${selectedItem.name}.`,
       type: "success",
     });
-  };
+  }, [updateItem, user, eventBus, setShowConfirm]);
 
   return (
     <View>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { View } from "react-native";
 import { Button, Text } from "@rneui/themed";
 import { showMessage } from "react-native-flash-message";
@@ -18,20 +18,23 @@ const LendManual = ({ onSwitchMode, onSelectItem }) => {
     params: { name: businessName },
   });
 
-  const onSearchItem = async (itemId) => {
-    try {
-      const { data: itemData } = await itemById({
-        url: `/api/items/${itemId}`,
-      });
-      onSelectItem(itemData);
-    } catch (AxiosError) {
-      showMessage({
-        message: "Invalid ID inserted",
-        description: `${itemId} is not a valid item id.`,
-        type: "danger",
-      });
-    }
-  };
+  const onSearchItem = useCallback(
+    async (itemId) => {
+      try {
+        const { data: itemData } = await itemById({
+          url: `/api/items/${itemId}`,
+        });
+        onSelectItem(itemData);
+      } catch (AxiosError) {
+        showMessage({
+          message: "Invalid ID inserted",
+          description: `${itemId} is not a valid item id.`,
+          type: "danger",
+        });
+      }
+    },
+    [itemById, onSelectItem]
+  );
 
   return (
     <View style={styles.container}>

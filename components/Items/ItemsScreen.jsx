@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { View } from "react-native";
 import { Text, FAB } from "@rneui/themed";
 import { showMessage } from "react-native-flash-message";
@@ -31,12 +31,15 @@ const ItemsScreen = () => {
   // When user lends new item in app
   useEffect(() => eventBus.on("refresh", reloadItems), []);
 
-  const onAboutToRemoveItem = (item) => {
-    setRemoveItem(item);
-    setShowConfirm(true);
-  };
+  const onAboutToRemoveItem = useCallback(
+    (item) => {
+      setRemoveItem(item);
+      setShowConfirm(true);
+    },
+    [setRemoveItem, setShowConfirm]
+  );
 
-  const onConfirmRemoveItem = () => {
+  const onConfirmRemoveItem = useCallback(() => {
     updateItem({
       data: { ownerId: null, date: new Date().toLocaleDateString() },
     }).then(() => eventBus.emit("refresh"));
@@ -46,7 +49,7 @@ const ItemsScreen = () => {
       description: `successfully removed ${removeItem.name}.`,
       type: "success",
     });
-  };
+  }, [updateItem, eventBus, setShowConfirm]);
 
   return (
     <View style={styles.container}>

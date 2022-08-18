@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Text, FAB } from "@rneui/themed";
 import useAxios from "axios-hooks";
 
@@ -26,24 +26,27 @@ const BusinessManage = ({ business }) => {
 
   useEffect(() => eventBus.on("refresh", refreshItems), []);
 
-  const onAddItem = async ({ name }) => {
-    const itemId = `${name.substring(0, 2).toUpperCase()}${business.name
-      .substring(0, 2)
-      .toUpperCase()}${Math.floor(Math.random() * 10000)}`;
+  const onAddItem = useCallback(
+    async ({ name }) => {
+      const itemId = `${name.substring(0, 2).toUpperCase()}${business.name
+        .substring(0, 2)
+        .toUpperCase()}${Math.floor(Math.random() * 10000)}`;
 
-    await createItem({
-      url: `/api/items/${itemId}`,
-      data: {
-        name,
-        ownerId: null,
-        groupId: business.id,
-        groupName: business.name,
-        date: new Date().toLocaleDateString(),
-      },
-    });
-    setShowAddDialog(false);
-    eventBus.emit("refresh");
-  };
+      await createItem({
+        url: `/api/items/${itemId}`,
+        data: {
+          name,
+          ownerId: null,
+          groupId: business.id,
+          groupName: business.name,
+          date: new Date().toLocaleDateString(),
+        },
+      });
+      setShowAddDialog(false);
+      eventBus.emit("refresh");
+    },
+    [business, createItem, setShowAddDialog, eventBus]
+  );
 
   return (
     <>

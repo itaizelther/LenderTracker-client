@@ -1,4 +1,10 @@
-import React, { useState, useContext, useReducer, useEffect } from "react";
+import React, {
+  useState,
+  useContext,
+  useReducer,
+  useEffect,
+  useCallback,
+} from "react";
 import { View } from "react-native";
 import { Text, Button } from "@rneui/themed";
 import { showMessage } from "react-native-flash-message";
@@ -9,6 +15,8 @@ import useStyles from "./SigninStyles";
 import SigninInput from "./SigninInput";
 import UserContext from "../../context/userContext";
 
+const SHA256 = new Hashes.SHA256();
+
 const SigninScreen = () => {
   const styles = useStyles();
   const [isLogin, setIsLogin] = useState(true);
@@ -16,7 +24,9 @@ const SigninScreen = () => {
     ...state,
     ...newState,
   }));
+
   const [, setUserId] = useContext(UserContext);
+
   const [{ data: getUserRes }, searchUser] = useAxios(
     { url: "/api/users", params: { username: formValues?.username } },
     { manual: true }
@@ -25,23 +35,24 @@ const SigninScreen = () => {
     { url: "/api/users", method: "POST" },
     { manual: true }
   );
-  const SHA256 = new Hashes.SHA256();
 
   // on new login attempt
   useEffect(() => {
     onLogin();
-  }, [getUserRes]);
+  }, [getUserRes, onLogin]);
 
-  const isFormFilled = () => {
+  const isFormFilled = useCallback(() => {
     const formFields = ["username", "password"];
     if (!isLogin) formFields.push(["verify"]);
     return formFields.reduce(
       (prev, curr) =>
-        prev && formValues.hasOwnProperty(curr) && formValues[curr]
+        prev &&
+        Object.prototype.hasOwnProperty.call(formValues, curr) &&
+        formValues[curr]
     );
-  };
+  }, [formValues, isLogin]);
 
-  const onLogin = () => {
+  const onLogin = useCallback(() => {
     if (formValues?.username != null) {
       if (getUserRes == null || getUserRes.length == 0) {
         showMessage({
@@ -61,9 +72,9 @@ const SigninScreen = () => {
         }
       }
     }
-  };
+  }, [formValues, getUserRes, setUserId]);
 
-  const onRegister = () => {
+  const onRegister = useCallback(() => {
     if (formValues.password != formValues.verify) {
       showMessage({
         message: "Please verify your password",
@@ -78,7 +89,7 @@ const SigninScreen = () => {
         },
       }).then((res) => setUserId(res.data.id));
     }
-  };
+  }, [formValues, createUser, setUserId]);
 
   return (
     <View style={styles.container}>

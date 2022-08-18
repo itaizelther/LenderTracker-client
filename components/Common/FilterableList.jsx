@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Input, Text } from "@rneui/themed";
 
+const filterByObjProps = (obj, str) =>
+  Object.values(obj).some((property) =>
+    String(property).toLowerCase().includes(str.toLowerCase())
+  );
+
 const FilterableList = ({ children, items, emptyMessage, containerStyle }) => {
   const [filter, setFilter] = useState("");
-
-  const filterByObjProps = (obj, str) =>
-    Object.values(obj).some((property) =>
-      String(property).toLowerCase().includes(str.toLowerCase())
-    );
 
   return (
     <View style={containerStyle}>

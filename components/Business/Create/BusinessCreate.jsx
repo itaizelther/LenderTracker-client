@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { View } from "react-native";
 import { Text, Button } from "@rneui/themed";
 import useAxios from "axios-hooks";
@@ -16,25 +16,21 @@ const BusinessCreate = ({ onSelect }) => {
   );
   const [user] = useContext(UserContext);
 
-  const onCreateBusiness = () => {
+  const onCreateBusiness = useCallback(() => {
     createBusiness({ data: { name: businessName, ownerId: user.id } }).then(
       () => onSelect()
     );
-  };
+  }, [createBusiness, onSelect, businessName, user]);
 
   return (
     <>
       <Text style={styles.header}>No Business?</Text>
-
       <View style={{ height: 20 }} />
-
       <Text style={styles.createInstructions}>
         You do not have a business under your name.
       </Text>
       <Text style={styles.createInstructions}>You may create one now.</Text>
-
       <View style={{ height: 30 }} />
-
       <SigninInput field="Business Name" onChangeText={setBusinessName} />
       <View style={styles.createContainer}>
         <Button disabled={!businessName} onPress={onCreateBusiness}>

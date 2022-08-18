@@ -1,6 +1,6 @@
 import { makeStyles } from "@rneui/themed";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   container: {
     flex: 1,
     justifyContent: "flex-end",

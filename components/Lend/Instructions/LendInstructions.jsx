@@ -4,9 +4,10 @@ import { Text, Chip, Image, Button } from "@rneui/themed";
 import useStyles from "./instructionsStyles";
 import handshake from "../../../assets/handshake.png";
 
+const steps = ["Scan QR", "Confirm your selection", "Done!"];
+
 const LendInstructions = ({ onDone }) => {
   const styles = useStyles();
-  const steps = ["Scan QR", "Confirm your selection", "Done!"];
 
   return (
     <View style={styles.container}>
@@ -23,7 +24,7 @@ const LendInstructions = ({ onDone }) => {
         ))}
       </View>
       <View style={styles.buttonsContainer}>
-        <Button onPress={() => onDone(true)}>Let's go</Button>
+        <Button onPress={() => onDone(true)}>{"Let's go"}</Button>
         <Button type="clear" onPress={() => onDone(false)}>
           I prefer to lend manually
         </Button>
