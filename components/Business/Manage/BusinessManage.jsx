@@ -30,7 +30,7 @@ const BusinessManage = ({ business }) => {
     async ({ name }) => {
       const itemId = `${name.substring(0, 2).toUpperCase()}${business.name
         .substring(0, 2)
-        .toUpperCase()}${Math.floor(Math.random() * 10000)}`;
+        .toUpperCase()}${Math.floor(1000 + Math.random() * 9000)}`;
 
       await createItem({
         url: `/api/items/${itemId}`,
