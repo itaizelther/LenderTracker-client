@@ -44,7 +44,7 @@ const LendScan = ({ onSwitchMode, onSelectItem, enable }) => {
         setHandling(false);
       }
     },
-    [setHandling, itemById, onSelectItem, setErrorDelay]
+    [setHandling, itemById, onSelectItem, setErrorDelay, errorDelay]
   );
 
   return (
