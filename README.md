@@ -1,21 +1,5 @@
-# @rneui/template
+# LenderTracker-client
 
-## React Native Elements Expo Template
+The frontend side of the project **Lender Tracker**, the final project of my thechntian diploma course given by [Mahat](https://www.gov.il/he/departments/topics/mahat-labor/govil-landing-page) (Labor Minister of Israel).
 
-### Usage
-
-#### Stable
-
-        expo init app --template @rneui/template
-
-#### Stable Typescript
-
-        expo init app --template @rneui/template@ts
-
-#### Bleeding Edge (Experimental)
-
-        expo init app --template @rneui/template@edge
-
-#### Bleeding Edge Typescript (Experimental)
-
-        expo init app --template @rneui/template@edge-ts
+This project is an app written with React Native framework.
